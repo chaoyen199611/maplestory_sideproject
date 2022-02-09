@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>create_character_window</class>
+ <widget class="QMainWindow" name="create_character_window">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>193</width>
+    <height>134</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>新增角色</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="create_charater_button">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>新增</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="cancelButton">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>80</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>取消</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_charater_name">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>47</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>角色名稱</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_role">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>47</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>角色職業</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>20</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="role_selection_box">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>50</y>
+      <width>111</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>英雄</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>聖騎士</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>黑騎士</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>冰雷</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>火毒</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>主教</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>箭神</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>神射手</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>開拓者</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>夜使者</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>暗影神偷</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>影武者</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>拳霸</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>槍神</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>重砲指揮官</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>墨玄</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>聖魂劍士</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>烈焰巫師</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>破風使者</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>暗影行者</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>閃雷悍將</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>米哈逸</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>爆拳槍神</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>煉獄巫師</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>狂暴獵人</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>傑諾</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>機甲戰神</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>狂狼勇士</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>龍魔導士</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>夜光</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>精靈遊俠</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>幻影俠盜</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>隱月</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>惡魔殺手</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>惡魔復仇者</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>凱薩</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>卡蒂娜</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>天使破壞者</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>劍豪</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>陰陽師</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>阿戴爾</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>伊利恩</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>亞克</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>神之子</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>虎影</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>幻獸師</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>菈菈</string>
+     </property>
+    </item>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
