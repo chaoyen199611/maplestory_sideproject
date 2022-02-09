@@ -34,10 +34,6 @@ class Ui_MainWindow(object):
         item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget.setHorizontalHeaderItem(1, item)
         
-        self.calendarWidget = QtWidgets.QCalendarWidget(self.centralwidget)
-        self.calendarWidget.setGeometry(QtCore.QRect(470, 80, 248, 183))
-        self.calendarWidget.setObjectName("calendarWidget")
-        
         self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
         self.groupBox.setGeometry(QtCore.QRect(240, 10, 181, 151))
         self.groupBox.setTabletTracking(False)
@@ -73,10 +69,6 @@ class Ui_MainWindow(object):
         self.label_3 = QtWidgets.QLabel(self.groupBox)
         self.label_3.setGeometry(QtCore.QRect(10, 70, 47, 20))
         self.label_3.setObjectName("label_3")
-        
-        self.character_list = QtWidgets.QListWidget(self.centralwidget)
-        self.character_list.setGeometry(QtCore.QRect(240, 250, 161, 191)) 
-        self.character_list.setObjectName("character_list")    
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -97,6 +89,34 @@ class Ui_MainWindow(object):
         self.menu.addAction(self.actionNew_Accouont)
         self.menu.addAction(self.actiona)
         self.menubar.addAction(self.menu.menuAction())
+
+        self.frame = QtWidgets.QFrame(self.centralwidget)
+        self.frame.setGeometry(QtCore.QRect(240, 210, 321, 251))
+        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame.setObjectName("frame")
+        
+        self.tableWidget = QtWidgets.QTableWidget(self.frame)
+        self.tableWidget.setGeometry(QtCore.QRect(10, 10, 301, 192))
+        self.tableWidget.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.tableWidget.setObjectName("tableWidget")
+        self.tableWidget.setColumnCount(3)
+        self.tableWidget.setRowCount(0)
+        
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(2, item)
+        
+        self.pushButton = QtWidgets.QPushButton(self.frame)
+        self.pushButton.setGeometry(QtCore.QRect(220, 210, 91, 31))
+        self.pushButton.setObjectName("pushButton")
+        
+        self.selectButton = QtWidgets.QPushButton(self.frame)
+        self.selectButton.setGeometry(QtCore.QRect(120, 210, 91, 31))
+        self.selectButton.setObjectName("selectButton")
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -120,6 +140,14 @@ class Ui_MainWindow(object):
         self.menu.setTitle(_translate("MainWindow", "帳號"))
         self.actionNew_Accouont.setText(_translate("MainWindow", "新增帳號"))
         self.actiona.setText(_translate("MainWindow", "切換帳號"))
+        item = self.tableWidget.horizontalHeaderItem(0)
+        item.setText(_translate("MainWindow", "角色名稱"))
+        item = self.tableWidget.horizontalHeaderItem(1)
+        item.setText(_translate("MainWindow", "職業"))
+        item = self.tableWidget.horizontalHeaderItem(2)
+        item.setText(_translate("MainWindow", "收益"))
+        self.pushButton.setText(_translate("MainWindow", "刪除角色"))
+        self.selectButton.setText(_translate("MainWindow", "選擇角色"))
 
     def create_character(self):
         self.window=QtWidgets.QMainWindow()
