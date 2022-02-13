@@ -1,6 +1,7 @@
+import pickle
 from PyQt5 import QtCore, QtGui, QtWidgets
 import os
-from os import walk
+from sqlalchemy import true
 from mainwindow import Ui_MainWindow
 
 class Ui_accountlist(object):
@@ -29,21 +30,21 @@ class Ui_accountlist(object):
         accountlist.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(accountlist)
         self.statusbar.setObjectName("statusbar")
-
-        self.select_account=""
         accountlist.setStatusBar(self.statusbar)
 
-        self.fileDir=os.path.join((os.path.abspath("."))+"\\account\\")
+        self.fileDir=os.path.join((os.path.abspath("."))+"\\data\\")
         if not os.path.exists(self.fileDir):
             os.makedirs(self.fileDir)
-        f = []
-        for (dirpath, dirnames, filenames) in walk(self.fileDir):
-            print(dirnames)
-            f.extend(dirnames)
-            break
+        self.accounts=self.loadall('account_data.pkl')
+        f=[]
+        for account in self.accounts:
+            self.account=account
+            f.append(account.account_name)
+
         self.listWidget.addItems(f)
         self.retranslateUi(accountlist)
         QtCore.QMetaObject.connectSlotsByName(accountlist)
+        
         self.pushButton.clicked.connect(self.select)
         self.pushButton_2.clicked.connect(self.cancel)
 
@@ -58,13 +59,24 @@ class Ui_accountlist(object):
         self.window.close()
 
     def select(self):
-        self.select_account=self.listWidget.currentItem().text()
+        for account in self.accounts:
+            if account.account_name==self.listWidget.currentItem().text():
+                self.account=account
+                break
         self.window.close()
         self.mainwindow.close()
         self.window=QtWidgets.QMainWindow()
         self.ui=Ui_MainWindow()
-        self.ui.setupUi(self.window,self.select_account)
+        self.ui.setupUi(self.window,self.account)
         self.window.show()
+
+    def loadall(self,filename):
+        with open(self.fileDir+filename,"rb") as f:
+            while True:
+                try:
+                    yield pickle.load(f)
+                except EOFError:
+                    break
 
 """ if __name__ == "__main__":
     import sys

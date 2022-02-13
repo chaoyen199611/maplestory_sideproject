@@ -6,11 +6,12 @@ from sqlalchemy import false, true
 from account import Acount
 
 class Ui_create_character_window(Acount):
-    def setupUi(self, create_character_window,account):
+    def setupUi(self, create_character_window,account,table):
         create_character_window.setObjectName("create_character_window")
         create_character_window.resize(193, 134)
         self.window=create_character_window
-        self.account=Acount(account)
+        self.account=account
+        self.table=table
         self.filedir=os.path.join((os.path.abspath("."))+"\\account\\"+self.account.account_name)
         print(self.filedir)
 
@@ -155,6 +156,8 @@ class Ui_create_character_window(Acount):
 
     def create(self):
         check=true
+        rowPosition = self.table.rowCount()
+        role=self.role_selection_box.currentText()
         with open(self.filedir+"\\character_list.txt",mode='a+',encoding='utf-8') as file:
             character_name=self.lineEdit.text()
             while true:    
@@ -162,10 +165,15 @@ class Ui_create_character_window(Acount):
                     if character_name == line:
                         check=false
                 if check:
-                    file.write(character_name)
+                    file.write(character_name+" ")
+                    file.write(role)
                     file.write("\n")
+                    self.table.insertRow(rowPosition)
+                    self.table.setItem(rowPosition , 0, QtWidgets.QTableWidgetItem(character_name))
+                    self.table.setItem(rowPosition , 1, QtWidgets.QTableWidgetItem(role))
+                    self.table.setItem(rowPosition,2,QtWidgets.QTableWidgetItem(0))
                     break
-        
+        print(character_name)
         self.window.close()
     
     def cancel(self):

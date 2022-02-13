@@ -1,3 +1,7 @@
-class Character(self):
-    def __init__():
-        super
+
+
+""" 
+
+class Character(object):
+    def __init__(self,name,):
+         """

@@ -3,6 +3,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
 import os
 from account import Acount
+import pickle
 
 
 class Ui_createNewAccount(object):
@@ -50,14 +51,13 @@ class Ui_createNewAccount(object):
     def create(self):
         account_name=self.lineEdit.text()
         account=Acount(account_name)
-        self.fileDir=os.path.join((os.path.abspath("."))+"\\account\\")
+        self.fileDir=os.path.join((os.path.abspath("."))+"\\data\\")
         if not os.path.exists(self.fileDir):
             os.makedirs(self.fileDir)
-        print(self.fileDir)
-        self.fileDir=os.path.join(self.fileDir,self.lineEdit.text())
-        if not os.path.exists(self.fileDir):
-            os.makedirs(self.fileDir)
+        with open(self.fileDir+'account_data.pkl','ab') as file:
+            pickle.dump(account,file,pickle.HIGHEST_PROTOCOL)
         self.window.close()
+
 
     def cancel(self):
         self.window.close()
