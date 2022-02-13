@@ -2,11 +2,13 @@ from tokenize import Double
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
 from decimal import Decimal
-from account import Acount
 from newcharacter import Ui_create_character_window
+from accountlist import Ui_accountlist
+
+import os
 
 
-class Ui_MainWindow(object):
+class Ui_MainWindow(Ui_accountlist):
     def setupUi(self, MainWindow,selected_account):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 499)
@@ -120,12 +122,15 @@ class Ui_MainWindow(object):
         self.selectButton = QPushButton(self.frame)
         self.selectButton.setGeometry(QtCore.QRect(120, 210, 91, 31))
         self.selectButton.setObjectName("selectButton")
-
+        
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
         self.incomeButton.clicked.connect(self.income)
         self.create_charater_button.clicked.connect(self.create_character)
+        self.fileDir=os.path.join((os.path.abspath("."))+"\\data\\"+self.account)
+        self.characters=self.loadall('account_data.pkl')
+        self.show_characterlist()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -158,8 +163,9 @@ class Ui_MainWindow(object):
         self.ui.setupUi(self.window,self.account,self.characterlist)
         self.window.show()
 
-    def show_characterlist(self):
-        self.characterlist=self.account.character
+    #def show_characterlist(self):
+    #    for character in self.characters:
+    #    pass
 
     def income(self):
         rowPosition = self.characterlist.rowCount()
@@ -169,7 +175,6 @@ class Ui_MainWindow(object):
             self.characterlist.setItem(rowPosition , 1, QtWidgets.QTableWidgetItem(self.lineEdit_2.text()))
         else:
             pass
-
 
 
 """ if __name__ == "__main__":

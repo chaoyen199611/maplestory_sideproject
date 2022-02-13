@@ -1,19 +1,19 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import os
-
+import pickle
 from sqlalchemy import false, true
 
-from account import Acount
+from account import Account
+from character import Character
 
-class Ui_create_character_window(Acount):
+class Ui_create_character_window(object):
     def setupUi(self, create_character_window,account,table):
         create_character_window.setObjectName("create_character_window")
         create_character_window.resize(193, 134)
         self.window=create_character_window
         self.account=account
         self.table=table
-        self.filedir=os.path.join((os.path.abspath("."))+"\\account\\"+self.account.account_name)
-        print(self.filedir)
+        self.filedir=os.path.abspath(".")
 
         self.centralwidget = QtWidgets.QWidget(create_character_window)
         self.centralwidget.setObjectName("centralwidget")
@@ -158,22 +158,20 @@ class Ui_create_character_window(Acount):
         check=true
         rowPosition = self.table.rowCount()
         role=self.role_selection_box.currentText()
-        with open(self.filedir+"\\character_list.txt",mode='a+',encoding='utf-8') as file:
-            character_name=self.lineEdit.text()
-            while true:    
-                for line in file:
-                    if character_name == line:
-                        check=false
-                if check:
-                    file.write(character_name+" ")
-                    file.write(role)
-                    file.write("\n")
-                    self.table.insertRow(rowPosition)
-                    self.table.setItem(rowPosition , 0, QtWidgets.QTableWidgetItem(character_name))
-                    self.table.setItem(rowPosition , 1, QtWidgets.QTableWidgetItem(role))
-                    self.table.setItem(rowPosition,2,QtWidgets.QTableWidgetItem(0))
-                    break
-        print(character_name)
+
+        character_name=self.lineEdit.text()
+        if character_name=="":
+            return
+        new_character=Character(character_name,role,self.account)
+        self.account.addCharacter(new_character)
+        with open(self.filedir+'account_data.pkl','ab') as file:
+            pickle.dump(new_character,file,pickle.HIGHEST_PROTOCOL)
+
+        self.table.insertRow(rowPosition)
+        self.table.setItem(rowPosition , 0, QtWidgets.QTableWidgetItem(new_character.name))
+        self.table.setItem(rowPosition , 1, QtWidgets.QTableWidgetItem(new_character.role))
+        self.table.setItem(rowPosition,2,QtWidgets.QTableWidgetItem(new_character.income))
+
         self.window.close()
     
     def cancel(self):

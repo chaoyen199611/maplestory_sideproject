@@ -59,6 +59,8 @@ class Ui_accountlist(object):
         self.window.close()
 
     def select(self):
+        if self.listWidget.currentItem()==None:
+            return
         for account in self.accounts:
             if account.account_name==self.listWidget.currentItem().text():
                 self.account=account
@@ -71,12 +73,15 @@ class Ui_accountlist(object):
         self.window.show()
 
     def loadall(self,filename):
-        with open(self.fileDir+filename,"rb") as f:
-            while True:
-                try:
-                    yield pickle.load(f)
-                except EOFError:
-                    break
+        try:
+            with open(self.fileDir+filename,"rb") as f:
+                while True:
+                    try:
+                        yield pickle.load(f)
+                    except EOFError:
+                        break
+        except:
+            pass
 
 """ if __name__ == "__main__":
     import sys

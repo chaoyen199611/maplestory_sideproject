@@ -2,11 +2,14 @@ from tkinter import messagebox
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
 import os
-from account import Acount
+from account import Account
 import pickle
 
+from accountlist import Ui_accountlist
 
-class Ui_createNewAccount(object):
+
+
+class Ui_createNewAccount(Ui_accountlist):
     def setupUi(self, createNewAccount):
         createNewAccount.setObjectName("createNewAccount")
         createNewAccount.resize(232, 93)
@@ -49,13 +52,26 @@ class Ui_createNewAccount(object):
         self.cancelButton.setText(_translate("createNewAccount", "取消"))
     
     def create(self):
-        account_name=self.lineEdit.text()
-        account=Acount(account_name)
+        accountname=self.lineEdit.text()
+        if accountname=="":
+            return
+        account=Account(accountname)
         self.fileDir=os.path.join((os.path.abspath("."))+"\\data\\")
         if not os.path.exists(self.fileDir):
             os.makedirs(self.fileDir)
+        
+        accounts=self.loadall('account_data.pkl')
+        print(accounts)
+        for accountData in accounts:
+            if accountname==accountData.account_name:
+                QMessageBox.about(self.window,"錯誤","已有此帳號")
+                return    
+        
         with open(self.fileDir+'account_data.pkl','ab') as file:
             pickle.dump(account,file,pickle.HIGHEST_PROTOCOL)
+        self.fileDir=self.fileDir+account.account_name
+        if not os.path.exists(self.fileDir):
+            os.makedirs(self.fileDir)
         self.window.close()
 
 
