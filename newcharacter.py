@@ -6,14 +6,13 @@ from sqlalchemy import false, true
 from account import Account
 from character import Character
 
-class Ui_create_character_window(object):
+class Ui_create_character_window(Account):
     def setupUi(self, create_character_window,account,table):
         create_character_window.setObjectName("create_character_window")
         create_character_window.resize(193, 134)
         self.window=create_character_window
         self.account=account
         self.table=table
-        self.filedir=os.path.abspath(".")
 
         self.centralwidget = QtWidgets.QWidget(create_character_window)
         self.centralwidget.setObjectName("centralwidget")
@@ -162,9 +161,11 @@ class Ui_create_character_window(object):
         character_name=self.lineEdit.text()
         if character_name=="":
             return
-        new_character=Character(character_name,role,self.account)
+        
+        new_character=Character(character_name,role)
         self.account.addCharacter(new_character)
-        with open(self.filedir+'account_data.pkl','ab') as file:
+        print(self.account.fileDir)
+        with open(self.account.fileDir+'\\account_characters.pkl','ab') as file:
             pickle.dump(new_character,file,pickle.HIGHEST_PROTOCOL)
 
         self.table.insertRow(rowPosition)

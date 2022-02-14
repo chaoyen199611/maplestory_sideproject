@@ -5,17 +5,14 @@ import os
 from account import Account
 import pickle
 
-from accountlist import Ui_accountlist
 
-
-
-class Ui_createNewAccount(Ui_accountlist):
-    def setupUi(self, createNewAccount):
-        createNewAccount.setObjectName("createNewAccount")
-        createNewAccount.resize(232, 93)
-        self.centralwidget = QtWidgets.QWidget(createNewAccount)
+class Ui_createNewAccount(Account):
+    def setupUi(self, createNewAccountWindow):
+        createNewAccountWindow.setObjectName("createNewAccountWindow")
+        createNewAccountWindow.resize(232, 93)
+        self.centralwidget = QtWidgets.QWidget(createNewAccountWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.window=createNewAccount
+        self.window=createNewAccountWindow
         
         self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit.setGeometry(QtCore.QRect(70, 10, 130, 20))
@@ -33,29 +30,29 @@ class Ui_createNewAccount(Ui_accountlist):
         self.cancelButton.setGeometry(QtCore.QRect(110, 40, 75, 23))
         self.cancelButton.setObjectName("cancelButton")
         
-        createNewAccount.setCentralWidget(self.centralwidget)
-        self.statusbar = QtWidgets.QStatusBar(createNewAccount)
+        createNewAccountWindow.setCentralWidget(self.centralwidget)
+        self.statusbar = QtWidgets.QStatusBar(createNewAccountWindow)
         self.statusbar.setObjectName("statusbar")
-        createNewAccount.setStatusBar(self.statusbar)
+        createNewAccountWindow.setStatusBar(self.statusbar)
 
-        self.retranslateUi(createNewAccount)
-        QtCore.QMetaObject.connectSlotsByName(createNewAccount)
+        self.retranslateUi(createNewAccountWindow)
+        QtCore.QMetaObject.connectSlotsByName(createNewAccountWindow)
 
         self.createAccount.clicked.connect(self.create)
         self.cancelButton.clicked.connect(self.cancel)
 
-    def retranslateUi(self, createNewAccount):
+    def retranslateUi(self, createNewAccountWindow):
         _translate = QtCore.QCoreApplication.translate
-        createNewAccount.setWindowTitle(_translate("createNewAccount", "新增帳號"))
-        self.label.setText(_translate("createNewAccount", "帳號名稱"))
-        self.createAccount.setText(_translate("createNewAccount", "創立"))
-        self.cancelButton.setText(_translate("createNewAccount", "取消"))
+        createNewAccountWindow.setWindowTitle(_translate("createNewAccountWindow", "新增帳號"))
+        self.label.setText(_translate("createNewAccountWindow", "帳號名稱"))
+        self.createAccount.setText(_translate("createNewAccountWindow", "創立"))
+        self.cancelButton.setText(_translate("createNewAccountWindow", "取消"))
     
     def create(self):
         accountname=self.lineEdit.text()
         if accountname=="":
             return
-        account=Account(accountname)
+        
         self.fileDir=os.path.join((os.path.abspath("."))+"\\data\\")
         if not os.path.exists(self.fileDir):
             os.makedirs(self.fileDir)
@@ -67,11 +64,17 @@ class Ui_createNewAccount(Ui_accountlist):
                 QMessageBox.about(self.window,"錯誤","已有此帳號")
                 return    
         
+        account=Account()
+        account.create(accountname)
+        account.fileDir=self.fileDir+account.account_name
         with open(self.fileDir+'account_data.pkl','ab') as file:
             pickle.dump(account,file,pickle.HIGHEST_PROTOCOL)
         self.fileDir=self.fileDir+account.account_name
         if not os.path.exists(self.fileDir):
             os.makedirs(self.fileDir)
+        with open(self.fileDir+'\\account_characters.pkl','ab') as file:
+            pass
+        
         self.window.close()
 
 

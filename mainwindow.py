@@ -2,13 +2,13 @@ from tokenize import Double
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
 from decimal import Decimal
+from account import Account
 from newcharacter import Ui_create_character_window
-from accountlist import Ui_accountlist
 
 import os
 
 
-class Ui_MainWindow(Ui_accountlist):
+class Ui_MainWindow(Account):
     def setupUi(self, MainWindow,selected_account):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 499)
@@ -17,25 +17,8 @@ class Ui_MainWindow(Ui_accountlist):
         
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.label = QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(0, 0, 800, 470))
-        self.label.setText("")
-        self.label.setPixmap(QtGui.QPixmap("image/main_background.png"))
-        self.label.setScaledContents(True)
-        self.label.setObjectName("label")
         
-        self.tableWidget = QTableWidget(self.centralwidget)
-        self.tableWidget.setGeometry(QtCore.QRect(10, 10, 211, 301))
-        self.tableWidget.setObjectName("tableWidget")
-        self.tableWidget.setColumnCount(2)
-        self.tableWidget.setRowCount(0)
-        
-        item = QTableWidgetItem()
-        item.setTextAlignment(QtCore.Qt.AlignCenter)
-        self.tableWidget.setHorizontalHeaderItem(0, item)
-        item = QTableWidgetItem()
-        item.setTextAlignment(QtCore.Qt.AlignCenter)
-        self.tableWidget.setHorizontalHeaderItem(1, item)
+
         
         self.groupBox = QGroupBox(self.centralwidget)
         self.groupBox.setGeometry(QtCore.QRect(240, 10, 181, 151))
@@ -74,24 +57,10 @@ class Ui_MainWindow(Ui_accountlist):
         self.label_3.setObjectName("label_3")
 
         MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(240, 200, 75, 21))
-        self.menubar.setObjectName("menubar")
-        self.menu = QMenu(self.menubar)
-        self.menu.setObjectName("menu")
-        MainWindow.setMenuBar(self.menubar)
         
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
-        
-        self.actionNew_Accouont = QAction(MainWindow)
-        self.actionNew_Accouont.setObjectName("actionNew_Accouont")
-        self.actiona = QAction(MainWindow)
-        self.actiona.setObjectName("actiona")
-        self.menu.addAction(self.actionNew_Accouont)
-        self.menu.addAction(self.actiona)
-        self.menubar.addAction(self.menu.menuAction())
 
         self.frame = QFrame(self.centralwidget)
         self.frame.setGeometry(QtCore.QRect(240, 210, 321, 251))
@@ -128,26 +97,19 @@ class Ui_MainWindow(Ui_accountlist):
 
         self.incomeButton.clicked.connect(self.income)
         self.create_charater_button.clicked.connect(self.create_character)
-        self.fileDir=os.path.join((os.path.abspath("."))+"\\data\\"+self.account)
+        self.fileDir=os.path.join((os.path.abspath("."))+"\\data\\"+self.account.account_name)
         self.characters=self.loadall('account_data.pkl')
         self.show_characterlist()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", self.account.account_name+"的記帳本"))
-        item = self.tableWidget.horizontalHeaderItem(0)
-        item.setText(_translate("MainWindow", "品項"))
-        item = self.tableWidget.horizontalHeaderItem(1)
-        item.setText(_translate("MainWindow", "價格"))
         self.groupBox.setTitle(_translate("MainWindow", "新增花費/收入"))
         self.incomeButton.setText(_translate("MainWindow", "收入"))
         self.expenseButton.setText(_translate("MainWindow", "支出"))
         self.label_2.setText(_translate("MainWindow", "品項"))
         self.label_3.setText(_translate("MainWindow", "價格"))
         self.create_charater_button.setText(_translate("MainWindow", "建立角色"))
-        self.menu.setTitle(_translate("MainWindow", "帳號"))
-        self.actionNew_Accouont.setText(_translate("MainWindow", "新增帳號"))
-        self.actiona.setText(_translate("MainWindow", "切換帳號"))
         item = self.characterlist.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "角色名稱"))
         item = self.characterlist.horizontalHeaderItem(1)
@@ -163,9 +125,16 @@ class Ui_MainWindow(Ui_accountlist):
         self.ui.setupUi(self.window,self.account,self.characterlist)
         self.window.show()
 
-    #def show_characterlist(self):
-    #    for character in self.characters:
-    #    pass
+    def show_characterlist(self):
+        print(self.fileDir)
+        characters=self.loadall('account_characters.pkl')
+        for character in characters:
+            rowPosition = self.characterlist.rowCount()
+            self.characterlist.insertRow(rowPosition)
+            self.characterlist.setItem(rowPosition , 0, QtWidgets.QTableWidgetItem(character.name))
+            self.characterlist.setItem(rowPosition , 1, QtWidgets.QTableWidgetItem(character.role))
+            self.characterlist.setItem(rowPosition , 2, QtWidgets.QTableWidgetItem(character.income))
+    
 
     def income(self):
         rowPosition = self.characterlist.rowCount()

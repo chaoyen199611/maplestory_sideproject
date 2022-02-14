@@ -2,9 +2,10 @@ import pickle
 from PyQt5 import QtCore, QtGui, QtWidgets
 import os
 from sqlalchemy import true
+from account import Account
 from mainwindow import Ui_MainWindow
 
-class Ui_accountlist(object):
+class Ui_accountlist(Account):
     def setupUi(self, accountlist,mainwindow):
         accountlist.setObjectName("accountlist")
         accountlist.resize(210, 300)
@@ -72,16 +73,7 @@ class Ui_accountlist(object):
         self.ui.setupUi(self.window,self.account)
         self.window.show()
 
-    def loadall(self,filename):
-        try:
-            with open(self.fileDir+filename,"rb") as f:
-                while True:
-                    try:
-                        yield pickle.load(f)
-                    except EOFError:
-                        break
-        except:
-            pass
+    
 
 """ if __name__ == "__main__":
     import sys
